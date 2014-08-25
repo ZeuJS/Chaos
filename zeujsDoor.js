@@ -7,14 +7,14 @@ module.exports =
   services: [
     {
       id: 'events',
-      service: new EventsBag()
+      service: new EventsBag(),
     },
     {
       id: 'eventsMapper',
-      service: require('./mappers/events.js')
+      service: require('./mappers/events.js'),
     }
   ],
   events: [
 
-  ]
+  ],
 };
