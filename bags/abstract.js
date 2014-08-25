@@ -32,7 +32,27 @@ AbstractBag.prototype.find = function find(key, value) {
 
 AbstractBag.prototype.findById = function findById(search) {
   return AbstractBag.prototype.find.call(this, 'id', search);
-}
+};
+
+AbstractBag.prototype.has = function has(key, value) {
+  var hasDatum;
+  try {
+    this.data.forEach(function findInEachDatum(datum) {
+      if (datum[key] === value) {
+        throw 'found';
+      }
+    });
+  } catch (e) {
+    if (e !== 'found') { throw e; }
+    return true
+  }
+  return false;
+};
+
+AbstractBag.prototype.hasId = function hasId(search) {
+  return AbstractBag.prototype.has.call(this, 'id', search);
+};
+
 AbstractBag.prototype.normalize = function (entity) {
   if (typeof entity.id === 'undefined') {
     throw 'id must be defined for a bag entity';
