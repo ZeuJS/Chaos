@@ -9,6 +9,7 @@ var ServicesMapper = require('../mappers/services.js');
 
 // Iterate on base modules to find all zeujs doors
 module.exports = function exploreModules(baseDir) {
+  global.originDir = baseDir;
   modulesDirPath = path.join(baseDir, 'node_modules')
   fs.readdir(
     modulesDirPath,

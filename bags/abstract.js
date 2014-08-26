@@ -57,6 +57,6 @@ AbstractBag.prototype.normalize = function (entity) {
   if (typeof entity.id === 'undefined') {
     throw 'id must be defined for a bag entity';
   }
-  //No nothing by default
+  //No more by default
 };
 module.exports = AbstractBag;
