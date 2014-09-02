@@ -8,33 +8,29 @@ var ServicesBag = function ServicesBag() {
 
 ServicesBag.prototype = Object.create(AbstractBag.prototype);
 ServicesBag.prototype.constructor = ServicesBag;
-
-// Check if the service follow some rules.
-// Sample :
-// {
-//  id: 'MyService',
-//  object: new MyService(),
-//  alias : {
-//    id: 'MyServiceAlias',
-//    priority: 1000, (Lower is easier overridable, 0 by default)
-//  }
-//}
-ServicesBag.prototype.normalize = function normalizeAService(service) {
-  AbstractBag.prototype.normalize.call(this, service);
-  if (typeof service.alias === 'object') {
-    if (typeof service.alias.priority === 'undefined') {
-      service.alias.priority = 0;
+ServicesBag.prototype.normalize = function normalizeAService(item) {
+  AbstractBag.prototype.normalize.call(this, item);
+  if (typeof item.alias === 'object') {
+    if (typeof item.alias.priority === 'undefined') {
+      item.alias.priority = 0;
     }
-    if (typeof service.alias.id === 'undefined') {
+    if (typeof item.alias.id === 'undefined') {
       throw 'id must be defined for a service alias';
     }
   }
-  if (typeof service.service === 'undefined') {
+  if (typeof item.service === 'undefined' && typeof item.factory === 'undefined') {
     throw 'service must be defined';
+  }
+  if (typeof item.servicesNeeded !== 'undefined' && item.servicesNeeded === true) {
+    item.service.services = this;
   }
 };
 
 ServicesBag.prototype.findById = function findById(search) {
-  return AbstractBag.prototype.findById.call(this, search).service;
+  var found = AbstractBag.prototype.findById.call(this, search);
+  if (typeof found.factory === 'undefined')
+    return found.service;
+  else
+    return found.factory(this);
 }
 module.exports = ServicesBag;
