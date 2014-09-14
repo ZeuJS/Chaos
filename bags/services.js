@@ -1,6 +1,7 @@
 "use strict";
 
 var AbstractBag = require('./abstract.js');
+var util = require('util');
 
 var ServicesBag = function ServicesBag() {
   AbstractBag.call(this);
@@ -28,6 +29,9 @@ ServicesBag.prototype.normalize = function normalizeAService(item) {
 
 ServicesBag.prototype.findById = function findById(search) {
   var found = AbstractBag.prototype.findById.call(this, search);
+  if (typeof found === 'undefined') {
+    throw util.format('Service "%s" not found', search);
+  }
   if (typeof found.factory === 'undefined')
     return found.service;
   else
