@@ -1,7 +1,11 @@
 {
-  "name": "zeujsChaos",
+  "name": "zeujs-chaos",
   "version": "0.0.1-alpha",
   "dependencies": {
     "jsonfile": "~2.0.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ZeuJS/Chaos.git"
   }
 }
